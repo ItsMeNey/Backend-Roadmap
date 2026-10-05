@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical C#, .NET, and Umbraco learning roadmap for becoming a well-rounded mid-level backend developer.">
+  <title>Backend Field Guide</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="Backend Field Guide home">
+        <span class="brand-mark">{ }</span>
+        <span>Backend<br>Field Guide</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="roadmap">Roadmap</button>
+        <button class="nav-item" data-view="weekly">This week</button>
+        <button class="nav-item" data-view="quiz">Quiz lab</button>
+        <button class="nav-item" data-view="capstone">Capstone</button>
+        <button class="nav-item" data-view="method">How to study</button>
+      </nav>
+
+      <div class="sidebar-progress">
+        <div class="progress-label">
+          <span>Total progress</span>
+          <strong id="sidebarPercent">0%</strong>
+        </div>
+        <div class="progress-track"><span id="sidebarBar"></span></div>
+        <p id="sidebarCount">0 of 0 concepts complete</p>
+      </div>
+
+      <button class="reset-button" id="resetProgress">Reset progress</button>
+    </aside>
+
+    <main id="top">
+      <section class="view active" id="roadmapView">
+        <header class="hero">
+          <div>
+          <p class="eyebrow">Your route from AI-assisted junior to senior .NET backend engineer</p>
+            <h1>Learn the system beneath the framework.</h1>
+            <p class="hero-copy">A visual, hands-on field guide for C#, .NET, production engineering, and Umbraco 17. Check off a concept only when you can explain it, implement it, and debug it without AI supplying the reasoning.</p>
+          </div>
+          <div class="hero-stat">
+            <span id="heroPercent">0%</span>
+            <small>mastered</small>
+          </div>
+        </header>
+
+        <section class="toolbar" aria-label="Roadmap filters">
+          <label class="search">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Try async, caching, Examine…">
+          </label>
+          <label>
+            <span>Track</span>
+            <select id="trackFilter"><option value="all">All tracks</option></select>
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="statusFilter">
+              <option value="all">Everything</option>
+              <option value="open">Still to learn</option>
+              <option value="done">Completed</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="legend">
+          <span><i class="dot foundation"></i> Foundation</span>
+          <span><i class="dot production"></i> Production</span>
+          <span><i class="dot platform"></i> Umbraco</span>
+          <p>Suggested pace: 4 focused sessions per week. The order matters more than the calendar.</p>
+        </section>
+
+        <div id="roadmap" class="roadmap"></div>
+        <div id="emptyState" class="empty-state" hidden>No concepts match those filters.</div>
+      </section>
+
+      <section class="view" id="weeklyView">
+        <header class="page-header">
+          <p class="eyebrow">Hybrid plan · Monday to Friday · 1:00–3:00 PM core</p>
+          <h1>Your current training week</h1>
+          <p>The first incomplete module automatically becomes this week’s focus. Use 3:00–4:00 PM only for the optional stretch task or extra project implementation.</p>
+        </header>
+        <div id="currentFocus" class="current-focus"></div>
+        <div id="weeklySessions" class="weekly-sessions"></div>
+        <section class="friday-gate">
+          <div>
+            <p class="eyebrow">Friday mastery gate</p>
+            <h2>Time spent does not unlock the next module.</h2>
+          </div>
+          <p>Advance when you can explain the concepts without notes, solve the module challenge, implement the project slice, and diagnose one deliberately introduced failure. Otherwise mark it for reinforcement and repeat only the weak parts.</p>
+        </section>
+      </section>
+
+      <section class="view" id="quizView">
+        <header class="page-header quiz-header">
+          <div>
+            <p class="eyebrow">Fast recall with explanation</p>
+            <h1>Quiz lab</h1>
+            <p>Choose an answer before revealing the explanation. Questions you miss return in later rounds, but a quiz score never replaces the practical mastery gate.</p>
+          </div>
+          <div class="quiz-score"><strong id="quizScore">0/0</strong><span>this round</span></div>
+        </header>
+        <section class="quiz-controls">
+          <label><span>Question set</span><select id="quizTrack"></select></label>
+          <button id="startQuiz">Start 5-question round</button>
+          <button id="retryQuiz" class="secondary" disabled>Retry missed</button>
+        </section>
+        <section id="quizCard" class="quiz-card">
+          <p class="quiz-kicker">Ready when you are</p>
+          <h2>Select a question set and start a short round.</h2>
+          <p class="quiz-note">Use the result to decide what to revisit—not as proof that the skill is mastered.</p>
+        </section>
+      </section>
+
+      <section class="view" id="capstoneView">
+        <header class="page-header">
+          <p class="eyebrow">One system, every important backend muscle</p>
+          <h1>Build CommunityHub</h1>
+          <p>A real public portfolio and engineering laboratory. Umbraco 17 owns editorial content; ASP.NET Core APIs and SQL Server power interactive features. A provided React + TypeScript client keeps the learning centred on backend engineering while exposing you to modern integration contracts.</p>
+        </header>
+
+        <div class="architecture">
+          <div class="arch-node">React + TypeScript<br><small>Provided client</small></div>
+          <span>HTTP</span>
+          <div class="arch-node accent">Umbraco / ASP.NET Core<br><small>Pages + secured API</small></div>
+          <span>calls</span>
+          <div class="arch-split">
+            <div class="arch-node">Umbraco Content<br><small>Profile, projects, articles</small></div>
+            <div class="arch-node">EF Core + SQL<br><small>Messages, analytics, audit</small></div>
+          </div>
+        </div>
+
+        <section class="project-rules">
+          <article><strong>Umbraco owns</strong><p>Profile content, case studies, technical articles, reusable blocks, media, navigation, SEO, and publishing workflow.</p></article>
+          <article><strong>SQL owns</strong><p>Contact conversations, private notes, visitor events, saved items, notification outbox, idempotency records, and audit history.</p></article>
+          <article><strong>The API owns</strong><p>Business rules, authorization, validation, transactions, concurrency handling, rate limits, and stable request/response contracts.</p></article>
+        </section>
+
+        <h2 class="section-title">Build it in vertical slices</h2>
+        <div id="capstonePhases" class="phase-grid"></div>
+
+        <section class="definition-done">
+          <p class="eyebrow">The final test</p>
+          <h2>It is finished when you can defend it.</h2>
+          <ul>
+            <li>Trace a request from browser to storage and back.</li>
+            <li>Explain every dependency lifetime and architectural boundary.</li>
+            <li>Demonstrate validation, authorization, cancellation, and concurrency behaviour.</li>
+            <li>Recover from a failed notification without duplicating a registration.</li>
+            <li>Use logs and traces to diagnose a deliberately introduced failure.</li>
+            <li>Deploy it, document the operational checks, and restore it from a clean checkout.</li>
+            <li>Make a meaningful change without AI implementing it for you.</li>
+          </ul>
+        </section>
+      </section>
+
+      <section class="view" id="methodView">
+        <header class="page-header">
+          <p class="eyebrow">No passive tutorial marathons</p>
+          <h1>The four-session learning loop</h1>
+          <p>Each concept should move through recall, observation, failure, and application. That turns recognition into usable knowledge.</p>
+        </header>
+
+        <div class="method-grid">
+          <article><span>01</span><h2>Understand</h2><p>Read one focused explanation. Close it and explain the concept in your own words, including the problem it solves.</p></article>
+          <article><span>02</span><h2>Predict</h2><p>Read a small code sample and predict its output, execution order, allocations, or failure before running it.</p></article>
+          <article><span>03</span><h2>Break & debug</h2><p>Introduce or repair a realistic defect. Use breakpoints, logs, tests, and documentation before asking AI for the answer.</p></article>
+          <article><span>04</span><h2>Apply & recall</h2><p>Use the concept in the capstone or at work, then reproduce the explanation a day and a week later.</p></article>
+        </div>
+
+        <section class="mastery-card">
+          <div>
+            <p class="eyebrow">Checkbox rule</p>
+            <h2>When can I mark something complete?</h2>
+          </div>
+          <ol>
+            <li>I can explain it without notes.</li>
+            <li>I can identify it in unfamiliar code.</li>
+            <li>I can write or modify a small example.</li>
+            <li>I know a common failure or misuse.</li>
+            <li>I know when not to use it.</li>
+          </ol>
+        </section>
+
+        <section class="ai-contract">
+          <div>
+            <p class="eyebrow">Your AI contract</p>
+            <h2>Think first. Ask second. Verify always.</h2>
+          </div>
+          <div>
+            <p>Before AI: write your understanding, proposed flow, edge cases, and first attempt.</p>
+            <p>With AI: request questions, hints, review, competing designs, or missing cases.</p>
+            <p>After AI: explain the answer unaided, test it, and reject anything you cannot debug.</p>
+          </div>
+        </section>
+
+        <section class="prompt-card">
+          <p>Reusable tutor prompt</p>
+          <blockquote>Teach me this as a backend code-review exercise. Do not give me the solution first. Ask me to predict the behaviour, challenge incomplete reasoning, and give one hint at a time. End by making me explain the concept and one misuse without notes.</blockquote>
+          <button id="copyPrompt">Copy prompt</button>
+        </section>
+
+        <section class="reference-shelf">
+          <div>
+            <p class="eyebrow">Primary-source shelf</p>
+            <h2>Verify behaviour at the source.</h2>
+          </div>
+          <div class="reference-links">
+            <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noreferrer">C# documentation <span>↗</span></a>
+            <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/" target="_blank" rel="noreferrer">ASP.NET Core fundamentals <span>↗</span></a>
+            <a href="https://learn.microsoft.com/en-us/ef/core/" target="_blank" rel="noreferrer">EF Core documentation <span>↗</span></a>
+            <a href="https://docs.umbraco.com/umbraco-cms/" target="_blank" rel="noreferrer">Umbraco CMS documentation <span>↗</span></a>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="conceptDialog">
+    <button class="dialog-close" aria-label="Close">×</button>
+    <p class="eyebrow" id="dialogTrack"></p>
+    <h2 id="dialogTitle"></h2>
+    <p class="dialog-summary" id="dialogSummary"></p>
+    <div class="dialog-block">
+      <h3>Why it matters</h3>
+      <p id="dialogWhy"></p>
+    </div>
+    <div class="dialog-block">
+      <h3>Prove you know it</h3>
+      <p id="dialogChallenge"></p>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
