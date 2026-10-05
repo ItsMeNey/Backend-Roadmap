@@ -43,7 +43,7 @@ const stages = [
         c("Nullable reference types", "Compiler null-state analysis expresses intent but does not make runtime null impossible."),
         c("Boxing and unboxing", "Converting value types to object or interfaces can allocate and requires correct unboxing.")
       ]),
-      m("Classes, records, structs, and equality", "Choose a type according to identity, value semantics, size, mutability, and ownership—not fashion.", "Model a portfolio project as both an entity and a read-only response, then justify the different type choices.", [
+      m("Classes, records, structs, and equality", "Choose a type according to identity, value semantics, size, mutability, and ownership, not fashion.", "Model a portfolio project as both an entity and a read-only response, then justify the different type choices.", [
         c("Classes and identity", "Classes suit objects whose identity and lifecycle matter independently of their property values."),
         c("Records and value semantics", "Records make immutable-style data and value-based equality concise."),
         c("Structs and copying", "Structs are values copied on assignment and work best when small and conceptually atomic."),
@@ -320,7 +320,7 @@ const stages = [
         c("Connection and thread pools", "Exhausted shared pools can make healthy dependencies appear slow."),
         c("Load testing", "Model realistic traffic, data, warmup, and service limits instead of chasing a synthetic number.")
       ]),
-      m("Reliable background processing", "Durable work needs ownership, retries, deduplication, poison handling, and observable completion—not fire-and-forget tasks.", "Queue a contact notification transactionally, crash the worker after sending, and prevent duplicate delivery during recovery.", [
+      m("Reliable background processing", "Durable work needs ownership, retries, deduplication, poison handling, and observable completion, not fire-and-forget tasks.", "Queue a contact notification transactionally, crash the worker after sending, and prevent duplicate delivery during recovery.", [
         c("Queues and workers", "Separate request latency from durable processing while accepting eventual completion."),
         c("Retry with backoff and jitter", "Retry transient failures without synchronizing clients or overwhelming a recovering dependency."),
         c("Outbox pattern", "Store a state change and its future message atomically, then publish reliably."),
@@ -415,10 +415,10 @@ const stages = [
         c("Build versus buy", "Compare ownership cost, constraints, lock-in, risk, and differentiation."),
         c("Evolution strategy", "Design migration and compatibility steps, not only the desired end state.")
       ]),
-      m("Technical leadership", "Seniority is demonstrated by improving decisions, delivery, and learning across the team—not by owning the most complicated code.", "Run a design review, review a pull request, write an incident summary, and mentor someone through a debugging session without taking over.", [
+      m("Technical leadership", "Seniority is demonstrated by improving decisions, delivery, and learning across the team, not by owning the most complicated code.", "Run a design review, review a pull request, write an incident summary, and mentor someone through a debugging session without taking over.", [
         c("Requirement clarification", "Expose assumptions, edge cases, and acceptance criteria before implementation cost grows."),
         c("Estimation and risk", "Break work into evidence-based slices and communicate uncertainty early."),
-        c("Code review", "Review correctness, security, maintainability, operability, and shared understanding—not personal style."),
+        c("Code review", "Review correctness, security, maintainability, operability, and shared understanding, not personal style."),
         c("Mentoring", "Use questions, context, and progressive ownership to make another developer more capable."),
         c("Incident leadership", "Coordinate mitigation, evidence, communication, recovery, and blameless follow-up."),
         c("Standards and leverage", "Improve templates, tooling, documentation, and paved paths that prevent repeated team-wide cost.")
@@ -554,7 +554,7 @@ function renderRoadmap() {
 
     const stageElement = document.createElement("section");
     stageElement.className = "stage";
-    stageElement.innerHTML = `<div class="stage-meta"><span class="stage-number">${String(stageIndex + 1).padStart(2, "0")}</span><h2>${stage.title}</h2><p>${stage.description}</p></div><div class="modules"></div>`;
+    stageElement.innerHTML = `<div class="stage-meta"><h2>${stage.title}</h2><p>${stage.description}</p></div><div class="modules"></div>`;
     const modulesElement = stageElement.querySelector(".modules");
 
     visibleModules.forEach(({ module, concepts }, moduleIndex) => {
@@ -563,8 +563,7 @@ function renderRoadmap() {
       moduleElement.className = `module ${stageIndex === 0 && moduleIndex === 0 ? "open" : ""}`;
       moduleElement.innerHTML = `
         <button class="module-header" aria-expanded="${moduleElement.classList.contains("open")}">
-          <span class="module-index">${String(moduleIndex + 1).padStart(2, "0")}</span>
-          <span class="module-title"><strong>${module.title}</strong><small>${module.concepts.length} concepts · one practical mission</small></span>
+          <span class="module-title"><strong>${module.title}</strong><small>${module.concepts.length} concepts, one practical mission</small></span>
           <span class="module-progress"><b>${completed}/${module.concepts.length}</b> mastered</span>
         </button>
         <div class="module-body">
@@ -579,7 +578,7 @@ function renderRoadmap() {
       concepts.forEach((concept) => {
         const row = document.createElement("div");
         row.className = `concept ${state.completed.has(concept.id) ? "done" : ""}`;
-        row.innerHTML = `<input id="concept-${concept.id}" type="checkbox" ${state.completed.has(concept.id) ? "checked" : ""}><label for="concept-${concept.id}">${concept.title}</label><button class="learn-more">Learn →</button>`;
+        row.innerHTML = `<input id="concept-${concept.id}" type="checkbox" ${state.completed.has(concept.id) ? "checked" : ""}><label for="concept-${concept.id}">${concept.title}</label><button class="learn-more">Explore</button>`;
         row.querySelector("input").addEventListener("change", (event) => {
           if (event.target.checked) state.completed.add(concept.id); else state.completed.delete(concept.id);
           persist();
@@ -597,7 +596,7 @@ function renderRoadmap() {
 }
 
 function openConcept(concept) {
-  document.querySelector("#dialogTrack").textContent = `${concept.stage.title} · ${concept.module.title}`;
+  document.querySelector("#dialogTrack").textContent = `${concept.stage.title} / ${concept.module.title}`;
   document.querySelector("#dialogTitle").textContent = concept.title;
   document.querySelector("#dialogSummary").textContent = concept.summary;
   document.querySelector("#dialogWhy").textContent = concept.module.conclusion;
@@ -617,21 +616,20 @@ function currentModule() {
 function renderWeek() {
   const focus = currentModule();
   const remaining = focus.module.concepts.filter((concept) => !state.completed.has(concept.id));
-  document.querySelector("#currentFocus").innerHTML = `<p class="eyebrow">Current focus · ${focus.stage.title}</p><h2>${focus.module.title}</h2><p>${focus.module.conclusion} This week, concentrate on: ${remaining.slice(0, 4).map((concept) => concept.title).join(", ") || "final review"}.</p>`;
+  document.querySelector("#currentFocus").innerHTML = `<p class="context-line">Current focus / ${focus.stage.title}</p><h2>${focus.module.title}</h2><p>${focus.module.conclusion} This week, concentrate on: ${remaining.slice(0, 4).map((concept) => concept.title).join(", ") || "final review"}.</p>`;
   document.querySelector("#weeklySessions").innerHTML = sessions.map(([day, title, tasks, stretch]) => `
     <article class="session">
       <span class="day">${day}</span>
       <h3>${title}</h3>
-      <span class="time">1:00–3:00 PM · core</span>
+      <span class="time">1:00-3:00 PM, core</span>
       <ul>${tasks.map((task) => `<li>${task}</li>`).join("")}</ul>
-      <div class="stretch">3:00–4:00 PM · ${stretch}</div>
+      <div class="stretch">3:00-4:00 PM, ${stretch}</div>
     </article>`).join("");
 }
 
 function renderCapstone() {
-  document.querySelector("#capstonePhases").innerHTML = capstonePhases.map(([title, description, tags], index) => `
+  document.querySelector("#capstonePhases").innerHTML = capstonePhases.map(([title, description, tags]) => `
     <article class="phase">
-      <span class="phase-number">Phase ${String(index + 1).padStart(2, "0")}</span>
       <h3>${title}</h3>
       <p>${description}</p>
       <div class="phase-tags">${tags.map((tag) => `<span>${tag}</span>`).join("")}</div>
@@ -673,12 +671,12 @@ function renderQuizQuestion() {
   if (quizState.index >= quizState.round.length) {
     const total = quizState.round.length;
     const percent = total ? Math.round((quizState.correct / total) * 100) : 0;
-    card.innerHTML = `<p class="quiz-kicker">Round complete</p><h2>${quizState.correct} of ${total} correct · ${percent}%</h2><p class="quiz-note">${quizState.missed.length ? "Review the explanations, then retry the missed questions. After that, prove the topic in code." : "Strong recall. Now prove it through the current module's implementation and debugging mission."}</p>`;
+    card.innerHTML = `<p class="quiz-kicker">Round complete</p><h2>${quizState.correct} of ${total} correct, ${percent}%</h2><p class="quiz-note">${quizState.missed.length ? "Review the explanations, then retry the missed questions. After that, prove the topic in code." : "Strong recall. Now prove it through the current module's implementation and debugging mission."}</p>`;
     document.querySelector("#retryQuiz").disabled = quizState.missed.length === 0;
     return;
   }
   const question = quizState.round[quizState.index];
-  card.innerHTML = `<p class="quiz-kicker">${question.track} · Question ${quizState.index + 1} of ${quizState.round.length}</p><h2>${question.q}</h2><div class="quiz-answers">${question.a.map((answer, index) => `<button class="quiz-answer" data-index="${index}"><span>${String.fromCharCode(65 + index)}</span>${answer}</button>`).join("")}</div><div id="quizFeedback"></div>`;
+  card.innerHTML = `<p class="quiz-kicker">${question.track} / Question ${quizState.index + 1} of ${quizState.round.length}</p><h2>${question.q}</h2><div class="quiz-answers">${question.a.map((answer, index) => `<button class="quiz-answer" data-index="${index}"><span>${String.fromCharCode(65 + index)}</span>${answer}</button>`).join("")}</div><div id="quizFeedback"></div>`;
   card.querySelectorAll(".quiz-answer").forEach((button) => button.addEventListener("click", () => answerQuiz(Number(button.dataset.index))));
 }
 
