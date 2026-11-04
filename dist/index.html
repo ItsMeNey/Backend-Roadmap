@@ -76,7 +76,13 @@
 
         <aside class="course-status">
           <strong>The complete learning path is ready.</strong>
-          <p>All <span id="totalConceptCount">0</span> concepts include a concise explanation, a disposable practice exercise, an answer to compare, and a knowledge check. Your progress stays in this browser.</p>
+          <p>All <span id="totalConceptCount">0</span> concepts include a concise explanation, a disposable practice exercise, an answer to compare, and a knowledge check. Progress stays in this browser; export a backup to continue on another device.</p>
+          <div class="progress-transfer">
+            <button type="button" id="exportProgress">Export progress</button>
+            <button type="button" id="importProgress" class="secondary">Import progress</button>
+            <input type="file" id="progressFile" accept="application/json,.json" hidden>
+            <span id="progressTransferStatus" role="status" aria-live="polite"></span>
+          </div>
         </aside>
 
         <div id="roadmap" class="roadmap"></div>

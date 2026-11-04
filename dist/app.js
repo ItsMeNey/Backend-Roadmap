@@ -986,6 +986,86 @@ function persistCourse() {
   localStorage.setItem(courseStorageKey, JSON.stringify(courseState));
 }
 
+const progressFileFormat = "backend-field-guide-progress";
+const progressFileVersion = 1;
+const knownConceptIds = new Set(allConcepts.map((concept) => concept.id));
+
+function setProgressTransferStatus(message, type = "") {
+  const status = document.querySelector("#progressTransferStatus");
+  status.textContent = message;
+  status.className = type;
+}
+
+function normalizedLessonProgress() {
+  return Object.fromEntries(Object.entries(courseState)
+    .filter(([conceptId, progress]) => knownConceptIds.has(conceptId) && progress && typeof progress === "object")
+    .map(([conceptId, progress]) => [conceptId, {
+      reviewed: progress.reviewed === true,
+      exerciseRevealed: progress.exerciseRevealed === true,
+      quizPassed: progress.quizPassed === true
+    }]));
+}
+
+function exportProgress() {
+  const snapshot = {
+    format: progressFileFormat,
+    version: progressFileVersion,
+    exportedAt: new Date().toISOString(),
+    completedConceptIds: [...state.completed].filter((conceptId) => knownConceptIds.has(conceptId)),
+    lessonProgress: normalizedLessonProgress()
+  };
+  const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" });
+  const downloadUrl = URL.createObjectURL(blob);
+  const download = document.createElement("a");
+  download.href = downloadUrl;
+  download.download = `backend-field-guide-progress-${snapshot.exportedAt.slice(0, 10)}.json`;
+  document.body.append(download);
+  download.click();
+  download.remove();
+  setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+  setProgressTransferStatus(`Exported ${snapshot.completedConceptIds.length} completed concepts.`, "success");
+}
+
+function validateProgressSnapshot(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("The file does not contain a progress backup.");
+  if (value.format !== progressFileFormat) throw new Error("This JSON file is not a Backend Field Guide progress backup.");
+  if (value.version !== progressFileVersion) throw new Error(`Progress backup version ${value.version ?? "unknown"} is not supported.`);
+  if (!Array.isArray(value.completedConceptIds)) throw new Error("The completed-concept list is missing or invalid.");
+  if (!value.lessonProgress || typeof value.lessonProgress !== "object" || Array.isArray(value.lessonProgress)) throw new Error("The lesson-progress data is missing or invalid.");
+
+  const completedConceptIds = [...new Set(value.completedConceptIds
+    .filter((conceptId) => typeof conceptId === "string" && knownConceptIds.has(conceptId)))];
+  const lessonProgress = {};
+  Object.entries(value.lessonProgress).forEach(([conceptId, progress]) => {
+    if (!knownConceptIds.has(conceptId) || !progress || typeof progress !== "object" || Array.isArray(progress)) return;
+    lessonProgress[conceptId] = {
+      reviewed: progress.reviewed === true,
+      exerciseRevealed: progress.exerciseRevealed === true,
+      quizPassed: progress.quizPassed === true
+    };
+  });
+
+  return { completedConceptIds, lessonProgress };
+}
+
+async function importProgress(file) {
+  if (file.size > 1_000_000) throw new Error("The selected file is too large to be a progress backup.");
+  const snapshot = validateProgressSnapshot(JSON.parse(await file.text()));
+  const hasCurrentProgress = state.completed.size > 0 || Object.keys(courseState).length > 0;
+  if (hasCurrentProgress && !confirm("Replace the progress currently stored in this browser?")) return false;
+
+  state.completed.clear();
+  snapshot.completedConceptIds.forEach((conceptId) => state.completed.add(conceptId));
+  Object.keys(courseState).forEach((conceptId) => delete courseState[conceptId]);
+  Object.assign(courseState, snapshot.lessonProgress);
+  persist();
+  persistCourse();
+  renderRoadmap();
+  updateProgress();
+  setProgressTransferStatus(`Imported ${snapshot.completedConceptIds.length} completed concepts.`, "success");
+  return true;
+}
+
 function lessonState(concept) {
   courseState[concept.id] ??= { reviewed: false, exerciseRevealed: false, quizPassed: false };
   return courseState[concept.id];
@@ -1319,6 +1399,23 @@ document.querySelector("#resetProgress").addEventListener("click", () => {
   persistCourse();
   renderRoadmap();
   updateProgress();
+});
+
+document.querySelector("#exportProgress").addEventListener("click", exportProgress);
+document.querySelector("#importProgress").addEventListener("click", () => document.querySelector("#progressFile").click());
+document.querySelector("#progressFile").addEventListener("change", async (event) => {
+  const input = event.currentTarget;
+  const [file] = input.files;
+  if (!file) return;
+  setProgressTransferStatus("Importing progress…");
+  try {
+    const imported = await importProgress(file);
+    if (!imported) setProgressTransferStatus("Import canceled.");
+  } catch (error) {
+    setProgressTransferStatus(error instanceof SyntaxError ? "The selected file is not valid JSON." : error.message, "error");
+  } finally {
+    input.value = "";
+  }
 });
 
 document.querySelector("#copyPrompt").addEventListener("click", async (event) => {
