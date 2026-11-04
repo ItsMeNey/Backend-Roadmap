@@ -17,9 +17,8 @@
 
       <nav class="nav" aria-label="Primary navigation">
         <button class="nav-item active" data-view="roadmap">Roadmap</button>
-        <button class="nav-item" data-view="weekly">This week</button>
+        <button class="nav-item" data-view="weekly">Study plan</button>
         <button class="nav-item" data-view="quiz">Quiz lab</button>
-        <button class="nav-item" data-view="capstone">Capstone</button>
         <button class="nav-item" data-view="method">How to study</button>
       </nav>
 
@@ -41,7 +40,7 @@
           <div>
           <p class="context-line">C#, .NET, Umbraco 17, and production engineering</p>
             <h1>Learn the system beneath the framework.</h1>
-            <p class="hero-copy">A visual, hands-on field guide for C#, .NET, production engineering, and Umbraco 17. Check off a concept only when you can explain it, implement it, and debug it without AI supplying the reasoning.</p>
+            <p class="hero-copy">A visual, hands-on field guide for C#, .NET, production engineering, and Umbraco 17. Check off a concept only when you can explain it, reason through a small code example, and recognize its common mistakes.</p>
           </div>
           <div class="hero-stat">
             <span id="heroPercent">0%</span>
@@ -72,8 +71,13 @@
           <span>Foundation</span>
           <span>Production</span>
           <span>Umbraco</span>
-          <p>Suggested pace: 4 focused sessions per week. The order matters more than the calendar.</p>
+          <p>Follow the numbered stages in order. Each stage assumes only concepts introduced earlier; advanced topics appear after the foundations they depend on.</p>
         </section>
+
+        <aside class="course-status">
+          <strong>The complete learning path is ready.</strong>
+          <p>All <span id="totalConceptCount">0</span> concepts include a concise explanation, a disposable practice exercise, an answer to compare, and a knowledge check. Your progress stays in this browser.</p>
+        </aside>
 
         <div id="roadmap" class="roadmap"></div>
         <div id="emptyState" class="empty-state" hidden>No concepts match those filters.</div>
@@ -81,18 +85,18 @@
 
       <section class="view" id="weeklyView">
         <header class="page-header">
-          <p class="context-line">Hybrid plan, Monday to Friday, 1:00-3:00 PM core</p>
-          <h1>Your current training week</h1>
-          <p>The first incomplete module automatically becomes this week’s focus. Use 3:00-4:00 PM only for the optional stretch task or extra project implementation.</p>
+          <p class="context-line">Flexible sessions, no fixed calendar</p>
+          <h1>Your flexible study plan</h1>
+          <p>The first incomplete module automatically becomes your current focus. Choose the type of session that fits your available time and energy, then stop when the work is no longer useful.</p>
         </header>
         <div id="currentFocus" class="current-focus"></div>
         <div id="weeklySessions" class="weekly-sessions"></div>
         <section class="friday-gate">
           <div>
-            <p class="context-line">Friday mastery gate</p>
+            <p class="context-line">Mastery gate</p>
             <h2>Time spent does not unlock the next module.</h2>
           </div>
-          <p>Advance when you can explain the concepts without notes, solve the module challenge, implement the project slice, and diagnose one deliberately introduced failure. Otherwise mark it for reinforcement and repeat only the weak parts.</p>
+          <p>Advance when you can explain the concept without notes, predict a small example, pass its knowledge check, and recognize a common mistake. Otherwise repeat only the weak part.</p>
         </section>
       </section>
 
@@ -117,48 +121,6 @@
         </section>
       </section>
 
-      <section class="view" id="capstoneView">
-        <header class="page-header">
-          <p class="context-line">One system, every important backend muscle</p>
-          <h1>Build Developer Career Hub</h1>
-          <p>A real public portfolio and engineering laboratory. Umbraco 17 owns editorial content; ASP.NET Core APIs and SQL Server power interactive features. A provided React + TypeScript client keeps the learning centred on backend engineering while exposing you to modern integration contracts.</p>
-        </header>
-
-        <div class="architecture">
-          <div class="arch-node">React + TypeScript<br><small>Provided client</small></div>
-          <span>HTTP</span>
-          <div class="arch-node accent">Umbraco / ASP.NET Core<br><small>Pages + secured API</small></div>
-          <span>calls</span>
-          <div class="arch-split">
-            <div class="arch-node">Umbraco Content<br><small>Profile, projects, articles</small></div>
-            <div class="arch-node">EF Core + SQL<br><small>Messages, analytics, audit</small></div>
-          </div>
-        </div>
-
-        <section class="project-rules">
-          <article><strong>Umbraco owns</strong><p>Profile content, case studies, technical articles, reusable blocks, media, navigation, SEO, and publishing workflow.</p></article>
-          <article><strong>SQL owns</strong><p>Contact conversations, private notes, visitor events, saved items, notification outbox, idempotency records, and audit history.</p></article>
-          <article><strong>The API owns</strong><p>Business rules, authorization, validation, transactions, concurrency handling, rate limits, and stable request/response contracts.</p></article>
-        </section>
-
-        <h2 class="section-title">Build it in vertical slices</h2>
-        <div id="capstonePhases" class="phase-grid"></div>
-
-        <section class="definition-done">
-          <p class="context-line">The final test</p>
-          <h2>It is finished when you can defend it.</h2>
-          <ul>
-            <li>Trace a request from browser to storage and back.</li>
-            <li>Explain every dependency lifetime and architectural boundary.</li>
-            <li>Demonstrate validation, authorization, cancellation, and concurrency behaviour.</li>
-            <li>Recover from a failed notification without duplicating a registration.</li>
-            <li>Use logs and traces to diagnose a deliberately introduced failure.</li>
-            <li>Deploy it, document the operational checks, and restore it from a clean checkout.</li>
-            <li>Make a meaningful change without AI implementing it for you.</li>
-          </ul>
-        </section>
-      </section>
-
       <section class="view" id="methodView">
         <header class="page-header">
           <p class="context-line">No passive tutorial marathons</p>
@@ -170,7 +132,7 @@
           <article><h2>Understand</h2><p>Read one focused explanation. Close it and explain the concept in your own words, including the problem it solves.</p></article>
           <article><h2>Predict</h2><p>Read a small code sample and predict its output, execution order, allocations, or failure before running it.</p></article>
           <article><h2>Break and debug</h2><p>Introduce or repair a realistic defect. Use breakpoints, logs, tests, and documentation before asking AI for the answer.</p></article>
-          <article><h2>Apply and recall</h2><p>Use the concept in the capstone or at work, then reproduce the explanation a day and a week later.</p></article>
+          <article><h2>Apply and recall</h2><p>Run or modify one small disposable example, then return later and reproduce the explanation without notes.</p></article>
         </div>
 
         <section class="mastery-card">
@@ -185,6 +147,14 @@
             <li>I know a common failure or misuse.</li>
             <li>I know when not to use it.</li>
           </ol>
+        </section>
+
+        <section class="seniority-note">
+          <div>
+            <p class="context-line">What completion means</p>
+            <h2>Knowledge supports senior work; it does not award seniority.</h2>
+          </div>
+          <p>Course mastery demonstrates technical breadth. Senior-level evidence also requires repeated production decisions, ownership through failures, clear trade-offs, safe delivery, and raising the effectiveness of other developers.</p>
         </section>
 
         <section class="ai-contract">
@@ -221,21 +191,18 @@
     </main>
   </div>
 
-  <dialog id="conceptDialog">
+  <dialog id="conceptDialog" class="course-dialog">
     <button class="dialog-close" aria-label="Close">×</button>
-    <p class="context-line" id="dialogTrack"></p>
-    <h2 id="dialogTitle"></h2>
-    <p class="dialog-summary" id="dialogSummary"></p>
-    <div class="dialog-block">
-      <h3>Why it matters</h3>
-      <p id="dialogWhy"></p>
-    </div>
-    <div class="dialog-block">
-      <h3>Prove you know it</h3>
-      <p id="dialogChallenge"></p>
-    </div>
+    <header class="course-header">
+      <p class="context-line" id="dialogTrack"></p>
+      <h2 id="dialogTitle"></h2>
+      <p class="dialog-summary" id="dialogSummary"></p>
+    </header>
+    <nav class="course-steps" id="courseSteps" aria-label="Lesson progress"></nav>
+    <div class="course-content" id="courseContent"></div>
   </dialog>
 
+  <script src="course-content.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

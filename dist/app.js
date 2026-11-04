@@ -1,7 +1,7 @@
 const c = (title, summary) => ({ title, summary });
 const m = (title, conclusion, mission, concepts) => ({ title, conclusion, mission, concepts });
 
-const stages = [
+const subjectStages = [
   {
     title: "Rebuild your learning system",
     description: "Stop outsourcing the reasoning",
@@ -43,7 +43,7 @@ const stages = [
         c("Nullable reference types", "Compiler null-state analysis expresses intent but does not make runtime null impossible."),
         c("Boxing and unboxing", "Converting value types to object or interfaces can allocate and requires correct unboxing.")
       ]),
-      m("Classes, records, structs, and equality", "Choose a type according to identity, value semantics, size, mutability, and ownership, not fashion.", "Model a portfolio project as both an entity and a read-only response, then justify the different type choices.", [
+      m("Classes, records, structs, and equality", "Choose a type according to identity, value semantics, size, mutability, and ownership, not fashion.", "Compare a small Customer class, Address record, and Coordinate struct, then explain why each type fits its meaning.", [
         c("Classes and identity", "Classes suit objects whose identity and lifecycle matter independently of their property values."),
         c("Records and value semantics", "Records make immutable-style data and value-based equality concise."),
         c("Structs and copying", "Structs are values copied on assignment and work best when small and conceptually atomic."),
@@ -155,7 +155,7 @@ const stages = [
         c("Serialization", "JSON contracts, null handling, naming, and cycles affect every client."),
         c("Exception handling and Problem Details", "Translate failures consistently without leaking sensitive implementation detail.")
       ]),
-      m("Production API design", "A durable API is a stable behavioural contract, not merely a controller that reaches the database.", "Design and integration-test the portfolio contact API including validation, duplicate submission, rate limiting, cancellation, and failure responses.", [
+      m("Production API design", "A durable API is a stable behavioural contract, not merely a controller that reaches the database.", "Design and integration-test a small book-lending API including validation, duplicate submission, cancellation, and failure responses.", [
         c("DTOs and contract boundaries", "Do not expose database entities or CMS models as public request and response contracts."),
         c("Validation", "Reject malformed input at the boundary and enforce business invariants inside the application."),
         c("Resource-oriented routes", "URLs identify resources while methods and representations express operations."),
@@ -163,7 +163,7 @@ const stages = [
         c("Backward compatibility and versioning", "Evolve contracts without unexpectedly breaking deployed clients."),
         c("OpenAPI", "A machine-readable contract supports discovery, testing, client generation, and change review.")
       ]),
-      m("Authentication and authorization", "Authentication builds an identity; authorization evaluates whether that identity may perform an operation on a resource.", "Protect portfolio administration with a default-deny policy and test anonymous, owner, editor, and forbidden paths.", [
+      m("Authentication and authorization", "Authentication builds an identity; authorization evaluates whether that identity may perform an operation on a resource.", "Protect a document-editing endpoint with a default-deny policy and test anonymous, owner, editor, and forbidden paths.", [
         c("Schemes and handlers", "Authentication handlers validate credentials and produce a ClaimsPrincipal."),
         c("Claims and roles", "Claims describe identity attributes; roles are one coarse form of authorization data."),
         c("Policies and requirements", "Policies express reusable permission rules beyond scattered role checks."),
@@ -186,7 +186,7 @@ const stages = [
     description: "Make data correct before making access convenient",
     category: "foundation",
     modules: [
-      m("Relational modelling", "A good schema expresses identity, relationships, validity, and ownership so invalid data is difficult to store.", "Draw an ER diagram for portfolio conversations, messages, tags, saved articles, and audit events before creating entities.", [
+      m("Relational modelling", "A good schema expresses identity, relationships, validity, and ownership so invalid data is difficult to store.", "Draw a small ER diagram for library members, books, loans, and loan history before creating entities.", [
         c("Tables, rows, and columns", "Tables model sets of facts with deliberate data types and nullability."),
         c("Primary and foreign keys", "Keys define identity and enforce relationships between records."),
         c("Cardinality", "One-to-one, one-to-many, and many-to-many relationships describe real domain constraints."),
@@ -202,7 +202,7 @@ const stages = [
         c("Window functions", "Calculate rankings, running values, and group-relative results without collapsing rows."),
         c("Data modification", "Update and delete with precise predicates, constraints, transactions, and verified impact.")
       ]),
-      m("Indexes and query performance", "Indexes trade storage and write cost for faster access; their value depends on real query shapes and selectivity.", "Capture an execution plan for a slow portfolio query, add an appropriate index, and compare reads and duration.", [
+      m("Indexes and query performance", "Indexes trade storage and write cost for faster access; their value depends on real query shapes and selectivity.", "Capture an execution plan for a slow order-history query, add an appropriate index, and compare reads and duration.", [
         c("Clustered and nonclustered indexes", "Understand the physical lookup path and the role of the clustering key."),
         c("Composite indexes", "Column order determines which predicates and sorts an index can support efficiently."),
         c("Covering and included columns", "Satisfy a query from the index while avoiding an excessively wide key."),
@@ -241,7 +241,7 @@ const stages = [
         c("Interface segregation and inversion", "Depend on focused capabilities owned by the needs of higher-level policy."),
         c("YAGNI and simplicity", "Do not pay abstraction cost for imagined variation without credible evidence.")
       ]),
-      m("Application boundaries and Clean Architecture", "Dependencies should point toward stable business policy while frameworks remain replaceable implementation details.", "Move one portfolio use case from controller-to-database code into an independently testable application boundary.", [
+      m("Application boundaries and Clean Architecture", "Dependencies should point toward stable business policy while frameworks remain replaceable implementation details.", "Move one weather-alert use case from controller-to-database code into an independently testable application boundary.", [
         c("Presentation boundary", "Translate transport concerns into application requests and results."),
         c("Application use cases", "Coordinate business operations without depending on HTTP or UI details."),
         c("Domain model", "Represent important rules and language independently of persistence mechanics."),
@@ -272,7 +272,7 @@ const stages = [
     description: "Prove behaviour and defend boundaries",
     category: "production",
     modules: [
-      m("Automated testing strategy", "Tests create fast evidence at different boundaries; the goal is confidence, not maximum mock count or coverage percentage.", "Write a unit test, database integration test, API test, and contract test for the same portfolio workflow, then explain what each uniquely proves.", [
+      m("Automated testing strategy", "Tests create fast evidence at different boundaries; the goal is confidence, not maximum mock count or coverage percentage.", "Write focused tests for small independent examples, then explain what each test boundary uniquely proves.", [
         c("Unit tests", "Exercise isolated business behaviour quickly with minimal infrastructure."),
         c("Integration tests", "Verify real collaboration with databases, framework pipelines, or other infrastructure."),
         c("API and contract tests", "Protect status codes, payload shape, authorization, headers, and compatibility."),
@@ -328,7 +328,7 @@ const stages = [
         c("At-least-once delivery", "Assume duplicate processing is possible and make consumers idempotent."),
         c("Scheduling", "Define timezone, missed-run, overlap, and ownership behaviour for recurring work.")
       ]),
-      m("Delivery, IIS, containers, and CI/CD", "A repeatable release builds one trusted artifact, validates it, promotes it through environments, and supports safe rollback.", "Create a pipeline that builds, tests, scans, packages, migrates, deploys, smoke-tests, and rolls back the portfolio.", [
+      m("Delivery, IIS, containers, and CI/CD", "A repeatable release builds one trusted artifact, validates it, promotes it through environments, and supports safe rollback.", "Create a disposable demo API and a pipeline that builds, tests, packages, deploys, smoke-tests, and rolls it back.", [
         c("Build artifacts", "Build once from a known commit and promote the same immutable output."),
         c("CI quality gates", "Automate compilation, tests, formatting, analysis, and dependency checks before merge."),
         c("Database deployment", "Coordinate backward-compatible schema changes with application rollout."),
@@ -368,7 +368,7 @@ const stages = [
         c("Health checks", "Expose actionable environment and configuration checks without revealing sensitive information."),
         c("Backoffice extensions", "Extend the modern backoffice only when editor workflow requires custom UI or capability.")
       ]),
-      m("Routing, APIs, and headless delivery", "Umbraco and ASP.NET Core routing share one host; custom endpoints need clear ownership, authorization, and stable contracts.", "Serve portfolio content through the Delivery API or a deliberate custom projection and add a secured operational API beside it.", [
+      m("Routing, APIs, and headless delivery", "Umbraco and ASP.NET Core routing share one host; custom endpoints need clear ownership, authorization, and stable contracts.", "Serve a small news content model through the Delivery API or a deliberate custom projection, then add one secured operational endpoint.", [
         c("Templates and render controllers", "Understand how content routes select rendering and where custom page behaviour belongs."),
         c("Surface and API controllers", "Choose controller types according to form, backoffice, or public API responsibilities."),
         c("Content Delivery API", "Expose published content through supported headless contracts when it fits the client."),
@@ -399,7 +399,7 @@ const stages = [
     description: "Multiply correctness beyond your own code",
     category: "production",
     modules: [
-      m("Distributed-system fundamentals", "Once work crosses processes or services, partial failure, delay, duplication, and inconsistent views are normal conditions.", "Design the portfolio notification flow for network failure, duplicate messages, delayed delivery, and dependency recovery.", [
+      m("Distributed-system fundamentals", "Once work crosses processes or services, partial failure, delay, duplication, and inconsistent views are normal conditions.", "Design a small email-notification flow for network failure, duplicate messages, delayed delivery, and dependency recovery.", [
         c("Partial failure", "One component can fail while others succeed, so operations need explicit recovery semantics."),
         c("Consistency trade-offs", "Choose where immediate consistency is required and where eventual convergence is acceptable."),
         c("Timeout budgets", "Allocate a request time budget across nested dependencies instead of stacking unrelated timeouts."),
@@ -407,7 +407,7 @@ const stages = [
         c("Outbox and inbox", "Bridge local transactions and message delivery without pretending they share one atomic commit."),
         c("Scaling and partitioning", "Scale stateless work easily, then identify state, coordination, and hotspot constraints.")
       ]),
-      m("System design and trade-offs", "Senior design begins with requirements and constraints, compares credible alternatives, and makes failure and operations visible.", "Write a short design record for portfolio analytics, including requirements, alternatives, data model, failure modes, security, rollout, and rejected options.", [
+      m("System design and trade-offs", "Senior design begins with requirements and constraints, compares credible alternatives, and makes failure and operations visible.", "Write a short design record for an audit-event service, including requirements, alternatives, data model, failure modes, security, rollout, and rejected options.", [
         c("Functional and quality requirements", "Capture behaviour plus latency, availability, security, operability, and cost expectations."),
         c("Capacity estimation", "Use rough numbers to expose likely bottlenecks and avoid architecture by intuition alone."),
         c("Architecture decision records", "Preserve context, options, choice, and consequences without writing a novel."),
@@ -423,7 +423,7 @@ const stages = [
         c("Incident leadership", "Coordinate mitigation, evidence, communication, recovery, and blameless follow-up."),
         c("Standards and leverage", "Improve templates, tooling, documentation, and paved paths that prevent repeated team-wide cost.")
       ]),
-      m("Professional depth", "A senior engineer keeps learning, communicates clearly, and can demonstrate impact without depending on a job title.", "Create a portfolio case study that explains one difficult decision, its evidence, trade-offs, production result, and what you would change next.", [
+      m("Professional depth", "A senior engineer keeps learning, communicates clearly, and can demonstrate impact without depending on a job title.", "Write a short case study from real or simulated work that explains one difficult decision, its evidence, trade-offs, result, and what you would change next.", [
         c("Primary-source learning", "Use official documentation, specifications, source, and experiments before relying on summaries."),
         c("Technical writing", "Explain decisions, contracts, operations, and risks so another engineer can act correctly."),
         c("Interview readiness", "Practise explaining fundamentals, debugging, SQL, API design, and system trade-offs aloud."),
@@ -434,27 +434,272 @@ const stages = [
   }
 ];
 
-const capstonePhases = [
-  ["Foundation", "Create the solution, repository, engineering journal, CI build, Umbraco 17 site, supplied React client, and local SQL Server environment.", ["CLI", "Git", "Visual Studio", "CI"]],
-  ["Content model", "Model profile, work history, projects, case studies, technologies, articles, SEO, navigation, and media in Umbraco.", ["Umbraco", "Models Builder", "Content design"]],
-  ["Public delivery", "Serve published portfolio content to the TypeScript client through deliberate, documented HTTP contracts.", ["HTTP", "Delivery API", "DTOs", "OpenAPI"]],
-  ["Contact workflow", "Build a validated contact API with SQL persistence, rate limiting, antiforgery decisions, and safe error responses.", ["API", "EF Core", "SQL", "Security"]],
-  ["Private workspace", "Add authenticated administration for conversations, notes, statuses, and resource-based permissions.", ["Identity", "Authorization", "Audit"]],
-  ["Reliable notifications", "Queue email through a transactional outbox and background worker with retries, idempotency, and dead-letter handling.", ["Workers", "Outbox", "Resilience"]],
-  ["Search", "Implement project and article search with Examine, filtering, pagination, index customization, and rebuild support.", ["Examine", "Lucene", "Caching"]],
-  ["Quality harness", "Add unit, database integration, full API, contract, security, and selected browser tests with deterministic data.", ["xUnit", "Testcontainers", "Contracts"]],
-  ["Observability", "Add structured Serilog events, correlation, traces, metrics, health checks, dashboards, and actionable alerts.", ["Serilog", "OpenTelemetry", "Health"]],
-  ["Performance and failure", "Load-test critical flows, profile bottlenecks, add justified caching, and run failure experiments.", ["Profiling", "Load tests", "Chaos drills"]],
-  ["Delivery", "Build an immutable artifact, apply reviewed migrations, deploy through environments, smoke-test, and practise rollback.", ["CI/CD", "IIS", "Containers", "Cloud"]],
-  ["Senior case study", "Publish an architecture narrative covering requirements, alternatives, threats, failures, evidence, compromises, and future evolution.", ["System design", "ADR", "Leadership"]]
+const sourceModules = new Map(subjectStages.flatMap((stage) => stage.modules.map((module) => [module.title, module])));
+
+function useModule(sourceTitle, options = {}) {
+  const source = sourceModules.get(sourceTitle);
+  if (!source) throw new Error(`Unknown curriculum module: ${sourceTitle}`);
+
+  const conceptTitles = options.concepts || source.concepts.map((concept) => concept.title);
+  const concepts = conceptTitles.map((title) => {
+    const concept = source.concepts.find((item) => item.title === title);
+    if (!concept) throw new Error(`Unknown concept '${title}' in '${sourceTitle}'`);
+    return { ...concept };
+  });
+
+  return m(
+    options.title || source.title,
+    options.conclusion || source.conclusion,
+    options.mission || source.mission,
+    concepts
+  );
+}
+
+const stages = [
+  {
+    title: "1. Learning workflow and developer tools",
+    description: "Set up the habits and tools used throughout every later stage",
+    category: "foundation",
+    modules: [
+      useModule("AI discipline and deliberate practice"),
+      useModule("Visual Studio, debugger, and source navigation"),
+      useModule("CLI, Git, and the build model")
+    ]
+  },
+  {
+    title: "2. Core C# reasoning",
+    description: "Understand values, objects, behaviour, collections, and failure before frameworks",
+    category: "foundation",
+    modules: [
+      m("C# language baseline", "Expressions create values, statements control execution, and methods and members organize behaviour behind explicit boundaries.", "Use a disposable console example to trace control flow, call methods, inspect properties, and rewrite one conditional with pattern matching.", [
+        c("Expressions, statements, and operators", "Distinguish code that produces a value from code that performs an action, and understand operator precedence."),
+        c("Conditions, loops, and control flow", "Use branches and loops deliberately, including early returns and short-circuit evaluation."),
+        c("Methods, parameters, and return values", "Define clear inputs and outputs, understand overloads and optional parameters, and avoid hidden side effects."),
+        c("Fields, properties, and constructors", "Know where object state lives, how access is exposed, and how valid state is established."),
+        c("Access modifiers, namespaces, and assemblies", "Understand which code can access a member and how projects become compiled assembly boundaries."),
+        c("Pattern matching and switch expressions", "Express type and value decisions concisely without unsafe casts or deeply nested conditionals."),
+        c("Compiler diagnostics and warnings", "Treat compiler errors and nullable or analyzer warnings as evidence to understand, not messages to silence blindly.")
+      ]),
+      useModule("Types, variables, and memory"),
+      m("Common backend values", "Backend correctness often depends on choosing and comparing ordinary values according to their real meaning.", "Solve small independent examples involving money, timestamps, identifiers, text comparison, and culture-sensitive parsing.", [
+        c("Strings and comparison rules", "Choose ordinal or culture-aware comparison deliberately and understand that strings are immutable."),
+        c("Numeric types and decimal", "Choose integer, floating-point, or decimal representations according to range, precision, and domain rules."),
+        c("DateTimeOffset, UTC, and time zones", "Store an unambiguous instant and convert to local time only at an explicit boundary."),
+        c("Enums and constrained states", "Use enums for a closed set of named states while validating undefined external values."),
+        c("Guid and identity values", "Use identifiers according to identity requirements without treating randomness as authorization or secrecy."),
+        c("Parsing, formatting, and culture", "Parse untrusted text explicitly and keep machine formats stable across server cultures.")
+      ]),
+      useModule("Classes, records, structs, and equality"),
+      useModule("Encapsulation and object relationships"),
+      useModule("Delegates, events, exceptions, and resources", {
+        title: "Delegates, lambdas, and events",
+        concepts: ["Delegates, Action, and Func", "Lambdas and closures", "Events"],
+        conclusion: "Delegates model executable behaviour, lambdas create it concisely, and events provide controlled notification between objects.",
+        mission: "Implement a small notification flow with a named delegate, a lambda, and an event, then inspect captured state in the debugger."
+      }),
+      useModule("Collections, generics, and LINQ"),
+      useModule("Delegates, events, exceptions, and resources", {
+        title: "Exceptions and explicit outcomes",
+        concepts: ["Exception flow", "Result versus exception"],
+        conclusion: "Expected business outcomes should be explicit; exceptions should preserve evidence about failures callers cannot handle normally.",
+        mission: "Implement one operation with expected validation outcomes and one unexpected failure, then test and debug both paths."
+      }),
+      useModule("Automated testing strategy", {
+        title: "First automated tests",
+        concepts: ["Unit tests", "Test doubles"],
+        conclusion: "A focused automated test proves observable behaviour quickly and isolates collaborators only when isolation adds value.",
+        mission: "Write unit tests for a small price calculator, including a successful path, invalid input, and a failing collaborator."
+      })
+    ]
+  },
+  {
+    title: "3. Essential asynchronous C#",
+    description: "Learn non-blocking work and resource lifetime before writing web and database code",
+    category: "foundation",
+    modules: [
+      useModule("Task-based asynchronous programming", {
+        title: "Async and await fundamentals",
+        concepts: ["Task and Task<T>", "async and await control flow", "I/O-bound versus CPU-bound", "CancellationToken", "Async failure and timeout"],
+        conclusion: "Async represents incomplete work and releases threads during I/O; cancellation and failures must flow through every layer.",
+        mission: "Trace a cancellable asynchronous operation in the debugger and explain when execution yields, resumes, fails, and stops."
+      }),
+      useModule("Delegates, events, exceptions, and resources", {
+        title: "Deterministic resource lifetime",
+        concepts: ["IDisposable and await using"],
+        conclusion: "Resources with external lifetimes must be released deterministically on success, failure, and cancellation.",
+        mission: "Use using and await using around disposable resources, deliberately throw inside each scope, and verify cleanup still runs."
+      }),
+      useModule("Runtime, allocation, and disposal", {
+        title: "Managed and external resources",
+        concepts: ["Managed versus unmanaged resources"],
+        conclusion: "The garbage collector manages object memory, while handles, streams, and connections still need explicit lifetime ownership.",
+        mission: "Classify the resources used by a small backend operation and document which component owns and releases each one."
+      })
+    ]
+  },
+  {
+    title: "4. .NET application foundation",
+    description: "Understand the host, dependency graph, and configuration before ASP.NET Core",
+    category: "foundation",
+    modules: [
+      useModule("Hosting, lifecycle, and background work", {
+        title: "The .NET generic host",
+        concepts: ["Generic host"],
+        conclusion: "The generic host owns application startup, configuration, dependency injection, logging, and shutdown.",
+        mission: "Trace a .NET application's startup from Program.cs to a resolved service and explain what the host creates."
+      }),
+      useModule("Dependency injection and lifetimes"),
+      useModule("Configuration, options, and environments")
+    ]
+  },
+  {
+    title: "5. HTTP and your first ASP.NET Core API",
+    description: "Build and test a complete in-memory request before adding a database",
+    category: "foundation",
+    modules: [
+      useModule("HTTP and browser fundamentals"),
+      useModule("Hosting, lifecycle, and background work", {
+        title: "Kestrel and reverse proxies",
+        concepts: ["Kestrel and reverse proxies"],
+        conclusion: "Kestrel accepts application HTTP traffic while IIS or another reverse proxy may own the public connection and forward requests.",
+        mission: "Run an ASP.NET Core app directly and behind IIS or a documented proxy diagram, then identify each network boundary."
+      }),
+      useModule("ASP.NET Core request pipeline"),
+      useModule("Production API design", {
+        title: "First API contracts and validation",
+        concepts: ["DTOs and contract boundaries", "Validation", "Resource-oriented routes", "OpenAPI"],
+        conclusion: "A first API needs an explicit contract, truthful HTTP behaviour, boundary validation, and discoverable documentation.",
+        mission: "Build a disposable in-memory books API with request and response DTOs, validation, Problem Details, and OpenAPI."
+      }),
+      useModule("Automated testing strategy", {
+        title: "ASP.NET Core integration and contract tests",
+        concepts: ["Integration tests", "API and contract tests"],
+        conclusion: "Integration tests prove that routing, binding, middleware, serialization, DI, and endpoint behaviour work together.",
+        mission: "Test the first API through its real HTTP pipeline, including success, invalid input, missing resources, and stable response contracts."
+      })
+    ]
+  },
+  {
+    title: "6. SQL Server and EF Core persistence",
+    description: "Learn relational storage before asking an API to persist real state",
+    category: "foundation",
+    modules: [
+      useModule("Relational modelling"),
+      useModule("SQL querying"),
+      useModule("EF Core fundamentals"),
+      useModule("Transactions, migrations, and concurrency"),
+      useModule("Indexes and query performance"),
+      useModule("Automated testing strategy", {
+        title: "Database integration testing",
+        concepts: ["Testcontainers and test data"],
+        conclusion: "Database tests need a repeatable real schema and deterministic data so mappings, constraints, transactions, and SQL are genuinely exercised.",
+        mission: "Run a small loans-data exercise against an isolated SQL Server database and prove one constraint and one transaction boundary."
+      })
+    ]
+  },
+  {
+    title: "7. Secure production APIs",
+    description: "Evolve the working database-backed API into a dependable public contract",
+    category: "production",
+    modules: [
+      useModule("Production API design", {
+        title: "API evolution and query contracts",
+        concepts: ["Pagination, filtering, and sorting", "Backward compatibility and versioning"],
+        conclusion: "Production APIs bound collection work, make queries deterministic, and evolve without surprising existing clients.",
+        mission: "Add deterministic paging, filtering, and sorting to a disposable orders API, then make one backward-compatible contract change."
+      }),
+      useModule("Authentication and authorization"),
+      useModule("Web application security"),
+      useModule("Identity and secrets"),
+      useModule("Outbound HTTP and integrations")
+    ]
+  },
+  {
+    title: "8. Architecture through real refactoring",
+    description: "Introduce boundaries and patterns only after you have working code to improve",
+    category: "production",
+    modules: [
+      useModule("Coupling, cohesion, and SOLID"),
+      useModule("Application boundaries and Clean Architecture"),
+      useModule("Domain modelling and patterns"),
+      useModule("Refactoring and legacy evolution"),
+      useModule("Automated testing strategy", {
+        title: "Testing depth and confidence",
+        concepts: ["Coverage and mutation thinking"],
+        conclusion: "Coverage can reveal unexecuted code, but only meaningful assertions and mutation resistance indicate useful test protection.",
+        mission: "Measure a small discount-calculator test suite, identify one falsely reassuring test, and strengthen it until a deliberate mutation is caught."
+      })
+    ]
+  },
+  {
+    title: "9. Umbraco 17 application development",
+    description: "Apply the transferable .NET, HTTP, data, security, and architecture foundations to Umbraco",
+    category: "platform",
+    modules: [
+      useModule("Content modelling and editor experience"),
+      useModule("Published content and content services"),
+      useModule("Composition, notifications, and extension points"),
+      useModule("Routing, APIs, and headless delivery")
+    ]
+  },
+  {
+    title: "10. Advanced runtime and reliable processing",
+    description: "Add concurrency and background work after transactions and failure handling are understood",
+    category: "production",
+    modules: [
+      useModule("Task-based asynchronous programming", {
+        title: "Concurrent asynchronous work",
+        concepts: ["Task.WhenAll and bounded concurrency"],
+        conclusion: "Independent asynchronous operations can overlap, but concurrency must be bounded by downstream capacity.",
+        mission: "Run independent calls sequentially and concurrently, measure the difference, then add a deliberate concurrency limit."
+      }),
+      useModule("Concurrency and thread safety"),
+      useModule("Runtime, allocation, and disposal", {
+        title: "Runtime behaviour and allocation",
+        concepts: ["Garbage-collection generations", "Finalizers and disposal", "Strings, spans, and pooling", "Memory leaks in managed code"],
+        conclusion: "Runtime optimization starts with correct ownership and measurement, not low-level techniques applied by instinct.",
+        mission: "Profile one disposable text-processing endpoint, explain its allocation and retention behaviour, and improve only a measured problem."
+      }),
+      useModule("Hosting, lifecycle, and background work", {
+        title: "Hosted services and application lifecycle",
+        concepts: ["IHostedService and BackgroundService", "Graceful shutdown", "Health checks"],
+        conclusion: "Long-running services need explicit scopes, cooperative shutdown, and health signals that reflect their ability to do work.",
+        mission: "Create a scoped background worker, stop it during processing, and verify cancellation, cleanup, and health behaviour."
+      }),
+      useModule("Reliable background processing")
+    ]
+  },
+  {
+    title: "11. Production operation and Umbraco delivery",
+    description: "Measure, tune, deploy, and recover the completed application",
+    category: "production",
+    modules: [
+      useModule("Observability and diagnosis"),
+      useModule("Performance and caching"),
+      useModule("Search, caching, and media"),
+      useModule("Delivery, IIS, containers, and CI/CD"),
+      useModule("Operations, upgrades, and Umbraco Cloud")
+    ]
+  },
+  {
+    title: "12. Senior engineering",
+    description: "Make sound decisions under scale, uncertainty, and shared ownership",
+    category: "production",
+    modules: [
+      useModule("Distributed-system fundamentals"),
+      useModule("System design and trade-offs"),
+      useModule("Technical leadership"),
+      useModule("Professional depth")
+    ]
+  }
 ];
 
 const sessions = [
-  ["Monday", "See the model", ["Short visual explanation", "Draw the flow or memory model", "Predict small code examples"], "Optional: read one primary documentation page"],
-  ["Tuesday", "Code and debug", ["Type the examples yourself", "Repair a deliberate defect", "Inspect runtime state in the debugger"], "Optional: create a harder failure case"],
-  ["Wednesday", "Apply it", ["Implement the capstone slice", "Commit one coherent change", "Explain the design aloud"], "Optional: compare a second design"],
-  ["Thursday", "Test and operate", ["Add automated tests", "Inspect logs or SQL", "Test failure and edge cases"], "Optional: measure performance or security"],
-  ["Friday", "Mastery gate", ["Recall without notes", "Complete the module mission", "Mark weak concepts for reinforcement"], "Optional: senior trade-off challenge"]
+  ["Explore", "See the model", ["Read one short visual explanation", "Draw the flow or memory model", "Predict small code examples"], "If you want more: read one primary documentation page"],
+  ["Practice", "Code and debug", ["Type the examples yourself", "Repair a deliberate defect", "Inspect runtime state in the debugger"], "If you want more: create a harder failure case"],
+  ["Apply", "Try a focused exercise", ["Predict the result before running", "Type or modify the small example", "Explain why the result occurs"], "If you want more: create one variation"],
+  ["Verify", "Test and operate", ["Add automated tests", "Inspect logs or SQL", "Test failure and edge cases"], "If you want more: measure performance or security"],
+  ["Review", "Mastery gate", ["Recall without notes", "Complete the module mission", "Mark weak concepts for reinforcement"], "If you want more: try the senior trade-off challenge"]
 ];
 
 const quizQuestions = [
@@ -490,16 +735,234 @@ const quizQuestions = [
   { track: "Senior", q: "Why is eventual consistency sometimes accepted?", a: ["Databases are optional", "Immediate cross-boundary consistency may be unavailable or too costly", "It guarantees no duplicates", "It removes failure handling"], correct: 1, why: "Distributed boundaries cannot share simple atomic updates. Some workflows accept temporary divergence and reconcile reliably." }
 ];
 
-const storageKey = "backend-field-guide-progress-v3";
+const storageKey = "backend-field-guide-progress-v4";
 const state = { completed: new Set(JSON.parse(localStorage.getItem(storageKey) || "[]")) };
+const courseStorageKey = "backend-field-guide-course-v3";
+const courseState = JSON.parse(localStorage.getItem(courseStorageKey) || "{}");
+const courseLessons = window.courseLessons || {};
+let activeConcept = null;
+let activeCourseStep = "lesson";
 
 const allConcepts = [];
-stages.forEach((stage, stageIndex) => stage.modules.forEach((module, moduleIndex) => module.concepts.forEach((concept, conceptIndex) => {
-  concept.id = `${stageIndex}-${moduleIndex}-${conceptIndex}`;
+const toStableId = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+stages.forEach((stage) => stage.modules.forEach((module) => module.concepts.forEach((concept) => {
+  concept.id = `${toStableId(module.title)}--${toStableId(concept.title)}`;
   concept.stage = stage;
   concept.module = module;
   allConcepts.push(concept);
 })));
+
+function learningDomain(concept) {
+  const text = `${concept.stage.title} ${concept.module.title} ${concept.title}`.toLowerCase();
+  if (text.includes("umbraco") || /published content|content service|examine|media/.test(text)) return "Umbraco";
+  if (/sql|database|relational|index|query|transaction|migration|ef core/.test(text)) return "Data";
+  if (/http|api|authentication|authorization|security|identity|secret|webhook|csrf|cors/.test(text)) return "Web/API";
+  if (/test|coverage|mutation/.test(text)) return "Testing";
+  if (/architecture|solid|coupling|cohesion|domain model|refactor|legacy/.test(text)) return "Architecture";
+  if (/observability|logging|trace|performance|cache|delivery|iis|container|ci\/cd|cloud|distributed|system design|leadership|professional/.test(text)) return "Production";
+  if (/git|visual studio|debugger|cli|build|ai discipline|practice/.test(text)) return "Tooling";
+  if (/async|task|concurren|thread|runtime|garbage|resource|disposal|host|dependency injection|configuration/.test(text)) return ".NET";
+  return "C#";
+}
+
+const domainGuides = {
+  "C#": {
+    lens: "Read the code from types and values outward: identify what each variable contains, which operation changes state, and what the caller can observe.",
+    evidence: "Predict the output, run the smallest example, and explain any difference using language semantics rather than intuition.",
+    misuse: "Choosing syntax because it looks modern without checking its value, lifetime, equality, or mutation semantics.",
+    code: "var values = new List<int> { 1, 2, 3 };\nvar result = values.Where(value => value > 1).ToArray();\n\nConsole.WriteLine(string.Join(\", \", result));"
+  },
+  ".NET": {
+    lens: "Trace ownership and lifetime: who creates the work or resource, who awaits or uses it, and who cancels, disposes, or releases it.",
+    evidence: "Use the debugger and logs to observe startup, lifetime, cancellation, failure, and cleanup instead of assuming the framework handles them.",
+    misuse: "Hiding lifetime or failure boundaries behind convenience APIs and then relying on accidental framework behaviour.",
+    code: "using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(2));\nawait Task.Delay(100, cancellation.Token);\nConsole.WriteLine(\"Completed\");"
+  },
+  "Web/API": {
+    lens: "Treat the request and response as a public contract. Separate transport validation, authorization, business rules, and infrastructure failure.",
+    evidence: "Send a successful request plus invalid, missing, unauthenticated, forbidden, and conflicting cases; verify status and response shape.",
+    misuse: "Returning 200 for every outcome or exposing internal models and exception details as the public contract.",
+    code: "POST /tickets/42/close HTTP/1.1\nAuthorization: Bearer <token>\nContent-Type: application/json\n\n{}\n\nExpected cases: 200, 400, 401, 403, 404, 409"
+  },
+  Data: {
+    lens: "Start from the data question, model the keys and constraints, then reason about the exact rows read or changed and the transaction boundary.",
+    evidence: "Run the query against small known data, inspect the result and execution plan, and test duplicates, missing relationships, and concurrent changes.",
+    misuse: "Accepting a query because it returns plausible rows without checking cardinality, null behaviour, constraints, or cost.",
+    code: "SELECT t.Id, t.Title, COUNT(c.Id) AS CommentCount\nFROM Tickets AS t\nLEFT JOIN Comments AS c ON c.TicketId = t.Id\nGROUP BY t.Id, t.Title;"
+  },
+  Testing: {
+    lens: "State one observable behaviour, arrange only the data it needs, perform one action, and assert the result that matters to a caller.",
+    evidence: "Make the test fail for the intended reason, restore the implementation, and confirm the test protects behaviour rather than its internal steps.",
+    misuse: "Mocking every class or chasing coverage while assertions fail to detect meaningful defects.",
+    code: "[Fact]\npublic void Close_WhenAlreadyClosed_ReturnsConflict()\n{\n    var ticket = Ticket.Closed();\n\n    var result = ticket.Close();\n\n    Assert.Equal(CloseResult.AlreadyClosed, result);\n}"
+  },
+  Architecture: {
+    lens: "Name the policy, the volatile detail, and the direction of dependency. Add a boundary only when it protects a real responsibility or source of change.",
+    evidence: "Replace or test the outer detail without changing the inner policy, then explain the trade-off introduced by the abstraction.",
+    misuse: "Creating an interface and layer for every class even when no useful boundary, variation, or test seam exists.",
+    code: "public sealed class CloseTicketHandler(ITicketRepository tickets)\n{\n    public async Task<CloseResult> HandleAsync(int id, CancellationToken token)\n    {\n        var ticket = await tickets.FindAsync(id, token);\n        return ticket is null ? CloseResult.NotFound : ticket.Close();\n    }\n}"
+  },
+  Umbraco: {
+    lens: "Decide whether the operation reads published content or changes editable content, then use the matching Umbraco API and lifecycle extension point.",
+    evidence: "Test published and unpublished states, permissions, cache behaviour, and the relevant environment instead of writing directly to Umbraco tables.",
+    misuse: "Using mutation services for routine frontend reads, bypassing published-state rules, or treating Umbraco database tables as a public API.",
+    code: "public sealed class ArticleService(IPublishedContentQuery contentQuery)\n{\n    public IPublishedContent? Find(Guid key) => contentQuery.Content(key);\n}"
+  },
+  Production: {
+    lens: "Define the expected load and failure first, then choose the smallest mechanism that makes the system observable, recoverable, and safe to operate.",
+    evidence: "Use measurements, structured telemetry, a failure drill, and a rollback or recovery path to prove the operational claim.",
+    misuse: "Adding infrastructure by fashion or optimizing a guessed bottleneck without a baseline and failure model.",
+    code: "Log.Information(\n    \"Handled {Operation} for {EntityId} in {ElapsedMs} ms\",\n    operation, entityId, elapsed.TotalMilliseconds);"
+  },
+  Tooling: {
+    lens: "Use the tool to collect evidence. Begin with a prediction, observe the actual build or runtime state, and record what changed your conclusion.",
+    evidence: "Repeat the task without hidden IDE assistance and explain the command, debugger view, or source-control operation that proved the result.",
+    misuse: "Clicking until an error disappears or accepting generated output without understanding which input, state, or command produced it.",
+    code: "dotnet restore\ndotnet build --no-restore\ndotnet test --no-build\ndotnet run --project src/MyApp"
+  }
+};
+
+function specificPractice(concept, guide) {
+  const title = concept.title.toLowerCase();
+  if (/attempt before assistance|ask for hints|verify generated|retrieval practice|own every retained line/.test(title)) return {
+    code: "Problem: A ticket closes locally but remains open after refresh.\n\nMy prediction:\nEvidence I will collect:\nSmallest reproduction:\nFirst fix attempt:\nWhat I will ask AI only after the attempt:\nHow I will verify the retained code:",
+    question: "Fill this out for a real or invented defect. Which parts must exist before you ask AI for a solution?",
+    answer: "Write the prediction, evidence plan, reproduction, and first attempt yourself. Use AI for a hint or review, then verify every retained claim and line with execution, tests, debugging, logs, or primary documentation."
+  };
+  if (/breakpoint|call stack|locals|watches|exception settings|navigate|find references/.test(title)) return {
+    code: "static int Total(int quantity, int price)\n{\n    var subtotal = quantity * price;\n    return subtotal;\n}\n\nConsole.WriteLine(Total(3, 20));",
+    question: "Where would you pause, what value would you predict, and which debugger view proves the caller and current state?",
+    answer: "Pause inside Total, predict subtotal as 60, inspect Locals or Watch for values, and use Call Stack to identify the caller. Change an input and repeat instead of relying on the source alone."
+  };
+  if (/project|solution|restore|build|run|publish|msbuild|launch profile|git/.test(title)) return {
+    code: "dotnet restore\ndotnet build --no-restore\ndotnet test --no-build\ndotnet run --project src/MyApp\ndotnet publish src/MyApp -c Release",
+    question: "State the distinct output or responsibility of each command, then identify which launch-profile settings an IDE may add when it runs the app.",
+    answer: "Restore resolves packages, build compiles, test runs tests, run starts the project, and publish creates deployable output. Launch profiles can add URLs, environment names, and process variables; Git separately records content history and collaboration state."
+  };
+  if (/date|utc|time zone/.test(title)) return {
+    code: "var instant = DateTimeOffset.Parse(\"2026-10-07T08:00:00Z\");\nvar manila = TimeZoneInfo.FindSystemTimeZoneById(\"Asia/Manila\");\nConsole.WriteLine(TimeZoneInfo.ConvertTime(instant, manila));",
+    question: "Which value is the unambiguous instant, and at what boundary is local time introduced?",
+    answer: "DateTimeOffset preserves the instant and offset. Conversion introduces Manila local time only for display or another explicit local-time requirement."
+  };
+  if (/string|culture|parsing|formatting/.test(title)) return {
+    code: "var left = \"admin\";\nvar right = \"ADMIN\";\nConsole.WriteLine(string.Equals(left, right, StringComparison.OrdinalIgnoreCase));",
+    question: "Why is the comparison rule stated explicitly?",
+    answer: "Text comparison depends on purpose. OrdinalIgnoreCase is deterministic for identifiers; user-facing language may require culture-aware rules."
+  };
+  if (/async|await|task|cancellation|timeout/.test(title)) return {
+    code: "using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(1));\nawait LoadAsync(timeout.Token);\n\nstatic async Task LoadAsync(CancellationToken token)\n{\n    await Task.Delay(100, token);\n}",
+    question: "Where must the cancellation token travel, and what happens when cancellation wins?",
+    answer: "The token must reach every cancellable async boundary. Await observes cancellation as an OperationCanceledException and cleanup must still run."
+  };
+  if (/lifetime|singleton|scoped|transient|dependency injection|scope/.test(title)) return {
+    code: "services.AddScoped<TicketService>();\nservices.AddScoped<ITicketRepository, TicketRepository>();\n// Draw one request scope and mark who owns each instance.",
+    question: "Which component owns these instances, and why must a singleton not capture either service?",
+    answer: "The request scope owns scoped services. A singleton outlives that scope and would retain request-specific, potentially disposed or non-thread-safe state."
+  };
+  if (/status|401|403|route|validation|contract|dto/.test(title)) return {
+    code: "GET /api/tickets/999\n\nExpected: 404 Not Found\n\nGET /api/admin/tickets/42\nAuthorization: Bearer <valid-non-admin-token>\n\nExpected: 403 Forbidden",
+    question: "Why are these outcomes not successful 200 responses?",
+    answer: "HTTP status is part of the contract. A missing resource and an authenticated-but-forbidden caller are different outcomes that clients must handle differently."
+  };
+  if (/join|sql|query|index|relational/.test(title)) return {
+    code: "SELECT t.Id, COUNT(c.Id) AS CommentCount\nFROM Tickets AS t\nLEFT JOIN Comments AS c ON c.TicketId = t.Id\nGROUP BY t.Id;",
+    question: "Why are LEFT JOIN and COUNT(c.Id) paired here?",
+    answer: "LEFT JOIN keeps tickets without comments. COUNT(c.Id) ignores the null placeholder, producing zero instead of incorrectly counting one row."
+  };
+  if (/auth|claim|role|policy|csrf|cors|secret|injection|xss/.test(title)) return {
+    code: "Request -> authenticate credential -> ClaimsPrincipal\n        -> evaluate policy for resource -> allow or forbid\n        -> execute state change only after authorization",
+    question: "Which decision proves identity, and which decision grants permission?",
+    answer: "Authentication proves or constructs identity. Authorization separately evaluates whether that identity may perform this action on this resource."
+  };
+  if (/race|concurren|idempoten|rowversion|optimistic/.test(title)) return {
+    code: "Request A reads Version 7\nRequest B reads Version 7\nRequest A updates where Version = 7 -> Version 8\nRequest B updates where Version = 7 -> 0 rows",
+    question: "What must Request B do after its conditional update affects zero rows?",
+    answer: "It must treat the write as a concurrency conflict, reload current state, and either retry a safe operation or return a conflict for explicit resolution."
+  };
+  if (/published|content service|composer|notification|examine|umbraco/.test(`${title} ${concept.module.title.toLowerCase()}`)) return {
+    code: guide.code,
+    question: "Is this a published read, an editable-content mutation, or an application-startup concern, and which Umbraco API owns it?",
+    answer: "Classify the operation first. Published APIs serve frontend reads, content services perform controlled mutations, and composers or notifications extend application lifecycle behaviour."
+  };
+  return {
+    code: guide.code,
+    question: `What would you inspect or change in this small example to demonstrate ${concept.title} rather than merely describe it?`,
+    answer: `${guide.evidence} Relate the observation back to this rule: ${concept.summary}`
+  };
+}
+
+function createCurriculumLesson(concept) {
+  const domain = learningDomain(concept);
+  const guide = domainGuides[domain];
+  const practice = specificPractice(concept, guide);
+  return {
+    objectives: [
+      `Explain ${concept.title} in plain language and name the problem it addresses.`,
+      `Recognize ${concept.title} in unfamiliar ${domain} work.`,
+      "Verify the behaviour with a small example or direct operational evidence."
+    ],
+    sections: [
+      {
+        title: "Core idea",
+        body: concept.summary
+      },
+      {
+        title: "How to reason about it",
+        body: guide.lens,
+        visual: `${concept.title}\n  -> What problem or constraint exists?\n  -> What observable behaviour follows?\n  -> What evidence would disprove the assumption?`
+      },
+      {
+        title: "Where it fits",
+        body: `${concept.module.conclusion} For this concept, do not stop at recognizing the term: connect it to a decision you could defend during implementation or review.`
+      }
+    ],
+    pitfalls: [
+      guide.misuse,
+      "Memorizing the definition without testing a success path and a failure or edge case.",
+      "Using AI output as evidence instead of verifying behaviour with code, tests, logs, a debugger, a query plan, or primary documentation."
+    ],
+    exercise: {
+      title: `Demonstrate ${concept.title}`,
+      intro: "Use a temporary console app, test, request, query window, or diagram. Predict the result before running or inspecting it.",
+      code: practice.code,
+      question: practice.question,
+      answer: practice.answer,
+      tryNext: `Change one input or assumption so the example fails, then explain how ${concept.title} changes the diagnosis or design.`
+    },
+    quiz: [
+      {
+        q: `Which statement best describes ${concept.title}?`,
+        a: [
+          concept.summary,
+          "It is a framework convention that can be applied without considering behaviour or trade-offs.",
+          "It is mainly a naming preference and does not affect correctness or maintenance.",
+          "It guarantees a correct result without tests, runtime evidence, or boundary validation."
+        ],
+        correct: 0,
+        why: concept.summary
+      },
+      {
+        q: `What is the strongest evidence that you understand ${concept.title}?`,
+        a: [
+          "You recognize the term when AI or documentation uses it.",
+          "You can repeat a definition word for word.",
+          "You can predict, demonstrate, explain, and modify a small example, including a failure case.",
+          "You used it once and the application compiled."
+        ],
+        correct: 2,
+        why: guide.evidence
+      }
+    ]
+  };
+}
+
+allConcepts.forEach((concept) => {
+  courseLessons[concept.id] = courseLessons[concept.title] || createCurriculumLesson(concept);
+});
+
+const lessonFor = (concept) => courseLessons[concept.id];
+
+document.querySelector("#totalConceptCount").textContent = String(allConcepts.length);
 
 const roadmap = document.querySelector("#roadmap");
 const trackFilter = document.querySelector("#trackFilter");
@@ -517,6 +980,24 @@ stages.forEach((stage, index) => {
 
 function persist() {
   localStorage.setItem(storageKey, JSON.stringify([...state.completed]));
+}
+
+function persistCourse() {
+  localStorage.setItem(courseStorageKey, JSON.stringify(courseState));
+}
+
+function lessonState(concept) {
+  courseState[concept.id] ??= { reviewed: false, exerciseRevealed: false, quizPassed: false };
+  return courseState[concept.id];
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function updateProgress() {
@@ -544,6 +1025,7 @@ function matches(concept, stageIndex) {
 function renderRoadmap() {
   roadmap.innerHTML = "";
   let visibleCount = 0;
+  let openedAvailableModule = false;
   stages.forEach((stage, stageIndex) => {
     const visibleModules = stage.modules.map((module) => ({
       module,
@@ -559,11 +1041,13 @@ function renderRoadmap() {
 
     visibleModules.forEach(({ module, concepts }, moduleIndex) => {
       const completed = module.concepts.filter((concept) => state.completed.has(concept.id)).length;
+      const shouldOpen = !openedAvailableModule;
+      if (shouldOpen) openedAvailableModule = true;
       const moduleElement = document.createElement("article");
-      moduleElement.className = `module ${stageIndex === 0 && moduleIndex === 0 ? "open" : ""}`;
-      moduleElement.innerHTML = `
+      moduleElement.className = `module ${shouldOpen ? "open" : ""}`;
+        moduleElement.innerHTML = `
         <button class="module-header" aria-expanded="${moduleElement.classList.contains("open")}">
-          <span class="module-title"><strong>${module.title}</strong><small>${module.concepts.length} concepts, one practical mission</small></span>
+          <span class="module-title"><strong>${module.title}</strong><small>${module.concepts.length} ${module.concepts.length === 1 ? "concept" : "concepts"}, focused examples and checks</small></span>
           <span class="module-progress"><b>${completed}/${module.concepts.length}</b> mastered</span>
         </button>
         <div class="module-body">
@@ -578,13 +1062,7 @@ function renderRoadmap() {
       concepts.forEach((concept) => {
         const row = document.createElement("div");
         row.className = `concept ${state.completed.has(concept.id) ? "done" : ""}`;
-        row.innerHTML = `<input id="concept-${concept.id}" type="checkbox" ${state.completed.has(concept.id) ? "checked" : ""}><label for="concept-${concept.id}">${concept.title}</label><button class="learn-more">Explore</button>`;
-        row.querySelector("input").addEventListener("change", (event) => {
-          if (event.target.checked) state.completed.add(concept.id); else state.completed.delete(concept.id);
-          persist();
-          renderRoadmap();
-          updateProgress();
-        });
+        row.innerHTML = `<input id="concept-${concept.id}" type="checkbox" ${state.completed.has(concept.id) ? "checked" : ""} disabled><label for="concept-${concept.id}">${concept.title}</label><button class="learn-more">${state.completed.has(concept.id) ? "Review lesson" : "Start lesson"}</button>`;
         row.querySelector(".learn-more").addEventListener("click", () => openConcept(concept));
         conceptsElement.append(row);
       });
@@ -596,12 +1074,146 @@ function renderRoadmap() {
 }
 
 function openConcept(concept) {
+  activeConcept = concept;
+  activeCourseStep = "lesson";
   document.querySelector("#dialogTrack").textContent = `${concept.stage.title} / ${concept.module.title}`;
   document.querySelector("#dialogTitle").textContent = concept.title;
   document.querySelector("#dialogSummary").textContent = concept.summary;
-  document.querySelector("#dialogWhy").textContent = concept.module.conclusion;
-  document.querySelector("#dialogChallenge").textContent = concept.module.mission;
+  renderCourse();
   dialog.showModal();
+}
+
+function renderCourse() {
+  const lesson = lessonFor(activeConcept);
+  const progress = lessonState(activeConcept);
+  const steps = [
+    ["lesson", "Learn", true],
+    ["exercise", "Practice", progress.reviewed],
+    ["quiz", "Knowledge check", progress.exerciseRevealed]
+  ];
+  document.querySelector("#courseSteps").innerHTML = steps.map(([id, label, enabled]) =>
+    `<button data-step="${id}" class="${activeCourseStep === id ? "active" : ""}" ${enabled ? "" : "disabled"}>${label}${stepComplete(id, progress) ? " ✓" : ""}</button>`
+  ).join("");
+  document.querySelectorAll("#courseSteps button:not(:disabled)").forEach((button) => button.addEventListener("click", () => {
+    activeCourseStep = button.dataset.step;
+    renderCourse();
+  }));
+
+  if (activeCourseStep === "lesson") renderLesson(lesson, progress);
+  if (activeCourseStep === "exercise") renderCodeExercise(lesson, progress);
+  if (activeCourseStep === "quiz") renderLessonQuiz(lesson, progress);
+}
+
+function stepComplete(step, progress) {
+  if (step === "lesson") return progress.reviewed;
+  if (step === "exercise") return progress.exerciseRevealed;
+  if (step === "quiz") return progress.quizPassed;
+  return false;
+}
+
+function renderLesson(lesson, progress) {
+  const sections = lesson.sections.map((section) => `
+    <section class="lesson-section">
+      <h3>${escapeHtml(section.title)}</h3>
+      <p>${escapeHtml(section.body)}</p>
+      ${section.visual ? `<pre class="concept-visual">${escapeHtml(section.visual)}</pre>` : ""}
+      ${section.code ? `<pre class="code-sample"><code>${escapeHtml(section.code)}</code></pre>` : ""}
+    </section>`).join("");
+  document.querySelector("#courseContent").innerHTML = `
+    <section class="lesson-objectives">
+      <h3>What you will be able to do</h3>
+      <ul>${lesson.objectives.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    </section>
+    ${sections}
+    <section class="lesson-section pitfalls">
+      <h3>Common mistakes</h3>
+      <ul>${lesson.pitfalls.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    </section>
+    <div class="course-action">
+      <p>${progress.reviewed ? "Lesson reviewed. You can revisit it at any time." : "Explain the idea in your own words before continuing."}</p>
+      <button id="finishLesson">${progress.reviewed ? "Continue to code exercise" : "I reviewed the lesson"}</button>
+    </div>`;
+  document.querySelector("#finishLesson").addEventListener("click", () => {
+    progress.reviewed = true;
+    persistCourse();
+    activeCourseStep = "exercise";
+    renderCourse();
+  });
+}
+
+function renderCodeExercise(lesson, progress) {
+  const exercise = lesson.exercise;
+  document.querySelector("#courseContent").innerHTML = `
+    <section class="course-intro"><h3>${escapeHtml(exercise.title)}</h3><p>${escapeHtml(exercise.intro)}</p></section>
+    <section class="lesson-section">
+      <h3>Predict before you run it</h3>
+      <pre class="code-sample"><code>${escapeHtml(exercise.code)}</code></pre>
+      <p><strong>Your question:</strong> ${escapeHtml(exercise.question)}</p>
+    </section>
+    <section class="lesson-section" id="exerciseAnswer" ${progress.exerciseRevealed ? "" : "hidden"}>
+      <h3>Explanation</h3>
+      <p>${escapeHtml(exercise.answer)}</p>
+      ${exercise.tryNext ? `<p><strong>Try one change:</strong> ${escapeHtml(exercise.tryNext)}</p>` : ""}
+    </section>
+    <div class="course-action">
+      <p>This is a disposable exercise. You do not need to add it to another project or maintain it afterward.</p>
+      <button id="revealExercise">${progress.exerciseRevealed ? "Continue to knowledge check" : "Reveal explanation"}</button>
+    </div>`;
+
+  document.querySelector("#revealExercise").addEventListener("click", () => {
+    if (!progress.exerciseRevealed) {
+      progress.exerciseRevealed = true;
+      persistCourse();
+      renderCourse();
+      return;
+    }
+
+    activeCourseStep = "quiz";
+    renderCourse();
+  });
+}
+
+function renderLessonQuiz(lesson, progress) {
+  document.querySelector("#courseContent").innerHTML = `
+    <section class="course-intro"><h3>Knowledge check</h3><p>Answer every question correctly. Explanations appear after submission, and you can retry without penalty.</p></section>
+    <form id="lessonQuiz" class="lesson-quiz">
+      ${lesson.quiz.map((question, questionIndex) => `
+        <fieldset>
+          <legend>${questionIndex + 1}. ${escapeHtml(question.q)}</legend>
+          ${question.a.map((answer, answerIndex) => `<label><input type="radio" name="question-${questionIndex}" value="${answerIndex}"> <span>${escapeHtml(answer)}</span></label>`).join("")}
+          <div class="lesson-answer" id="answer-${questionIndex}"></div>
+        </fieldset>`).join("")}
+      <div class="course-action"><p id="quizResult">${progress.quizPassed ? "Knowledge check passed. You can complete this concept or retake the quiz." : "Select one answer for each question."}</p><button type="submit">Check answers</button>${progress.quizPassed ? '<button type="button" id="completeConcept">Complete concept</button>' : ""}</div>
+    </form>`;
+  document.querySelector("#lessonQuiz").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let correctCount = 0;
+    lesson.quiz.forEach((question, questionIndex) => {
+      const selected = new FormData(event.currentTarget).get(`question-${questionIndex}`);
+      const correct = Number(selected) === question.correct;
+      if (correct) correctCount += 1;
+      const answer = document.querySelector(`#answer-${questionIndex}`);
+      answer.className = `lesson-answer ${correct ? "correct" : "wrong"}`;
+      answer.textContent = `${correct ? "Correct. " : `Not yet. The best answer is: ${question.a[question.correct]}. `}${question.why}`;
+    });
+    if (correctCount === lesson.quiz.length) {
+      progress.quizPassed = true;
+      persistCourse();
+      renderCourse();
+    } else {
+      document.querySelector("#quizResult").textContent = `${correctCount} of ${lesson.quiz.length} correct. Review the explanations and retry.`;
+    }
+  });
+  document.querySelector("#completeConcept")?.addEventListener("click", completeActiveConcept);
+}
+
+function completeActiveConcept() {
+  state.completed.add(activeConcept.id);
+  persist();
+  persistCourse();
+  renderRoadmap();
+  updateProgress();
+  dialog.close();
 }
 
 function currentModule() {
@@ -616,23 +1228,13 @@ function currentModule() {
 function renderWeek() {
   const focus = currentModule();
   const remaining = focus.module.concepts.filter((concept) => !state.completed.has(concept.id));
-  document.querySelector("#currentFocus").innerHTML = `<p class="context-line">Current focus / ${focus.stage.title}</p><h2>${focus.module.title}</h2><p>${focus.module.conclusion} This week, concentrate on: ${remaining.slice(0, 4).map((concept) => concept.title).join(", ") || "final review"}.</p>`;
-  document.querySelector("#weeklySessions").innerHTML = sessions.map(([day, title, tasks, stretch]) => `
+  document.querySelector("#currentFocus").innerHTML = `<p class="context-line">Current focus / ${focus.stage.title}</p><h2>${focus.module.title}</h2><p>${focus.module.conclusion} When you return, continue with: ${remaining.slice(0, 4).map((concept) => concept.title).join(", ") || "final review"}.</p>`;
+  document.querySelector("#weeklySessions").innerHTML = sessions.map(([mode, title, tasks, stretch]) => `
     <article class="session">
-      <span class="day">${day}</span>
+      <span class="day">${mode}</span>
       <h3>${title}</h3>
-      <span class="time">1:00-3:00 PM, core</span>
       <ul>${tasks.map((task) => `<li>${task}</li>`).join("")}</ul>
-      <div class="stretch">3:00-4:00 PM, ${stretch}</div>
-    </article>`).join("");
-}
-
-function renderCapstone() {
-  document.querySelector("#capstonePhases").innerHTML = capstonePhases.map(([title, description, tags]) => `
-    <article class="phase">
-      <h3>${title}</h3>
-      <p>${description}</p>
-      <div class="phase-tags">${tags.map((tag) => `<span>${tag}</span>`).join("")}</div>
+      <div class="stretch">${stretch}</div>
     </article>`).join("");
 }
 
@@ -671,7 +1273,7 @@ function renderQuizQuestion() {
   if (quizState.index >= quizState.round.length) {
     const total = quizState.round.length;
     const percent = total ? Math.round((quizState.correct / total) * 100) : 0;
-    card.innerHTML = `<p class="quiz-kicker">Round complete</p><h2>${quizState.correct} of ${total} correct, ${percent}%</h2><p class="quiz-note">${quizState.missed.length ? "Review the explanations, then retry the missed questions. After that, prove the topic in code." : "Strong recall. Now prove it through the current module's implementation and debugging mission."}</p>`;
+    card.innerHTML = `<p class="quiz-kicker">Round complete</p><h2>${quizState.correct} of ${total} correct, ${percent}%</h2><p class="quiz-note">${quizState.missed.length ? "Review the explanations, then retry the missed questions." : "Strong recall. Reinforce it with one small code example or debugger experiment."}</p>`;
     document.querySelector("#retryQuiz").disabled = quizState.missed.length === 0;
     return;
   }
@@ -712,7 +1314,9 @@ dialog.addEventListener("click", (event) => {
 document.querySelector("#resetProgress").addEventListener("click", () => {
   if (!confirm("Reset every completed concept?")) return;
   state.completed.clear();
+  Object.keys(courseState).forEach((key) => delete courseState[key]);
   persist();
+  persistCourse();
   renderRoadmap();
   updateProgress();
 });
@@ -728,6 +1332,5 @@ document.querySelector("#startQuiz").addEventListener("click", () => startQuiz()
 document.querySelector("#retryQuiz").addEventListener("click", () => startQuiz(quizState.missed));
 
 renderRoadmap();
-renderCapstone();
 setupQuizTracks();
 updateProgress();
